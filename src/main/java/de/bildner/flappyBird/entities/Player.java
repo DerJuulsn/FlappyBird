@@ -1,7 +1,7 @@
-package de.bildner.FlappyBird.Entities;
+package de.bildner.flappyBird.entities;
 
-import de.bildner.FlappyBird.Game.GameController;
-import de.bildner.FlappyBird.Game.GameState;
+import de.bildner.flappyBird.game.GameController;
+import de.bildner.flappyBird.game.GameState;
 import processing.core.PApplet;
 import processing.core.PImage;
 
@@ -22,7 +22,7 @@ public class Player {
 
     private int flappyRadius;
 
-    private ArrayList<PImage> birds = new ArrayList<PImage>();
+    private final ArrayList<PImage> birds = new ArrayList<PImage>();
 
     public void init() {
         y = controller.height / 2;
@@ -33,7 +33,7 @@ public class Player {
         }
     }
 
-    public void flapp() {
+    public void flap() {
         dY = flapping * controller.getFactor();
     }
 
@@ -69,7 +69,7 @@ public class Player {
             return;
         }
 
-        PImage cbird = birds.get(tick);
+        PImage currentBird = birds.get(tick);
         if (controller.getState() == GameState.DEAD) {
             rotateAfterDeath += 10;
         }
@@ -78,7 +78,7 @@ public class Player {
 
         controller.translate((int) ((320 - flappyRadius) * controller.getFactor()), y - flappyRadius);
         controller.rotate(PApplet.radians(Math.min(90, rotateAfterDeath)));
-        controller.copy(cbird, 0, 0, cbird.width, cbird.height, 0,
+        controller.copy(currentBird, 0, 0, currentBird.width, currentBird.height, 0,
                 0, flappyRadius * 2, flappyRadius * 2);
 
         controller.popMatrix();

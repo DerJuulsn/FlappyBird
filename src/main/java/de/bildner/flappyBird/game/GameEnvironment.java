@@ -1,6 +1,6 @@
-package de.bildner.FlappyBird.Game;
+package de.bildner.flappyBird.game;
 
-import de.bildner.FlappyBird.Entities.Player;
+import de.bildner.flappyBird.entities.Player;
 import processing.core.PImage;
 
 import java.util.ArrayList;
@@ -15,7 +15,7 @@ class GameEnvironment {
     private int holeSize;
 
 
-    private GameController controller;
+    private final GameController controller;
 
     public GameEnvironment() {
         controller = GameController.getInstance();
@@ -43,22 +43,22 @@ class GameEnvironment {
         controller.copy(background, 0, 0, background.width, background.height, 0, 0, controller.width, controller.height);
     }
 
-    private ArrayList<Obstacle> obstacles = new ArrayList<Obstacle>();
+    private final ArrayList<Obstacle> obstacles = new ArrayList<Obstacle>();
 
     public ArrayList<Obstacle> getObstacles() {
         return obstacles;
     }
 
-    public int getTileWidth() {
+    private int getTileWidth() {
         return tileWidth;
     }
 
     public class Obstacle {
 
-        private int upperTubeBorder;
+        private final int upperTubeBorder;
         private int x;
         private boolean passed = false;
-        private int lowerTubeBorder;
+        private final int lowerTubeBorder;
 
         Obstacle(int xPosition) {
             x = xPosition;
@@ -78,8 +78,9 @@ class GameEnvironment {
             controller.copy(controller.getFlappyTileSet(), 0, 646, 52, 320, x, upperTubeBorder, tileWidth, -640);
             controller.copy(controller.getFlappyTileSet(), 0, 646, 52, 320, x, lowerTubeBorder, tileWidth, 640);
 
+            int horizontalSpeed = 5;
             if (controller.getState() != GameState.WAIT_FOR_START && controller.getState() != GameState.DEAD)
-                x -= 4;
+                x -= horizontalSpeed * controller.getFactor();
 
             return true;
         }
@@ -96,24 +97,21 @@ class GameEnvironment {
             return x;
         }
 
-        boolean checkForCollision() {
+        void checkForCollision() {
 
             if (controller.getState() == GameState.DEAD)
-                return false;
+                return;
 
             Player player = controller.getPlayer();
 
             if (getX() - 320 <= player.getFlappyRadius() && (getX() - 320 >= -player.getFlappyRadius() - controller.getGameEnvironment().getTileWidth())) {
                 if (player.getY() + player.getFlappyRadius() / 10 * 8 >= getLowerTubeBorder()) {
                     controller.setDead();
-                    return true;
                 } else if (player.getY() - player.getFlappyRadius() / 10 * 9 <= getUpperTubeBorder()) {
                     controller.setDead();
-                    return true;
                 }
 
             }
-            return false;
         }
 
         public boolean gotPassed() {

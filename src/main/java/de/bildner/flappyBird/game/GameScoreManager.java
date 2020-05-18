@@ -1,4 +1,4 @@
-package de.bildner.FlappyBird.Game;
+package de.bildner.flappyBird.game;
 
 import java.io.*;
 
@@ -14,7 +14,7 @@ class GameScoreManager {
     private void readHighScore() {
 
         try {
-            BufferedReader reader = new BufferedReader(new FileReader(getClass().getClassLoader().getResource("data/highscore.txt").getPath()));
+            @SuppressWarnings("ConstantConditions") BufferedReader reader = new BufferedReader(new FileReader(getClass().getClassLoader().getResource("data/highscore.txt").getPath()));
             String line = reader.readLine();
             if (line != null) {
                 try {
@@ -29,7 +29,7 @@ class GameScoreManager {
             System.err.println("ERROR reading scores from file");
         }
 
-        System.out.println("The highscore is: " + highScore);
+        System.out.println("The old highscore is: " + highScore);
 
     }
 
@@ -42,7 +42,7 @@ class GameScoreManager {
         score = 0;
     }
 
-    public void saveHighScore() {
+    private void saveHighScore() {
         try {
             BufferedWriter output = new BufferedWriter(new FileWriter(getClass().getClassLoader().getResource("data/highscore.txt").getPath(), true));
             output.write(highScore);

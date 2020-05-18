@@ -1,14 +1,14 @@
-package de.bildner.FlappyBird.Game;
+package de.bildner.flappyBird.game;
 
-import de.bildner.FlappyBird.Entities.Player;
+import de.bildner.flappyBird.entities.Player;
 import processing.core.PConstants;
 
 import java.util.ArrayList;
 
 class GameDrawer {
 
-    private GameController controller;
-    private Player player;
+    private final GameController controller;
+    private final Player player;
 
     GameDrawer() {
         controller = GameController.getInstance();

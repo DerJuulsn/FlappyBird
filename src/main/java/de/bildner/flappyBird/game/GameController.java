@@ -1,6 +1,6 @@
-package de.bildner.FlappyBird.Game;
+package de.bildner.flappyBird.game;
 
-import de.bildner.FlappyBird.Entities.Player;
+import de.bildner.flappyBird.entities.Player;
 import processing.core.PApplet;
 import processing.core.PImage;
 
@@ -13,7 +13,7 @@ public class GameController extends PApplet {
     private final GameScoreManager GAME_COIN_MANAGER;
 
     private GameState gameState = GameState.STOP;
-    private Player player;
+    private final Player player;
 
     private PImage flappyTileSet;
     private double factor;
@@ -22,7 +22,7 @@ public class GameController extends PApplet {
         PApplet.main(GameController.class.getName());
     }
 
-    public GameController() {
+    private GameController() {
         instance = this;
         player = new Player();
         GAME_DRAWER = new GameDrawer();
@@ -46,7 +46,6 @@ public class GameController extends PApplet {
         GAME_COIN_MANAGER.init();
         player.init();
         gameState = GameState.WAIT_FOR_START;
-        System.out.println(factor);
     }
 
     @Override
@@ -62,7 +61,7 @@ public class GameController extends PApplet {
             if (keyCode == 32 && !pressing) {
                 if (getState() == GameState.WAIT_FOR_START)
                     setState(GameState.RUNNING);
-                player.flapp();
+                player.flap();
                 pressing = true;
             }
     }
