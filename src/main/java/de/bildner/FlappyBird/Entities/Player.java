@@ -10,7 +10,7 @@ import java.util.ArrayList;
 public class Player {
 
     private static final double gravity = 2;   // constant downward acceleration
-    private static final int flapping = -20;   // upward acceleration whenever isFlapping is true
+    private static final int flapping = -22;   // upward acceleration whenever isFlapping is true
 
     private final GameController controller = GameController.getInstance();
 
@@ -38,7 +38,11 @@ public class Player {
     }
 
     public void addGravity() {
-        if (dY <= 20)
+
+        if (dY < 0 && controller.getState() == GameState.DEAD)
+            dY = 0;
+
+        if (dY <= 30)
             dY += gravity * controller.getFactor();
         y += dY;
     }
@@ -67,21 +71,17 @@ public class Player {
 
         PImage cbird = birds.get(tick);
         if (controller.getState() == GameState.DEAD) {
-            rotateAfterDeath += 5;
-
-            controller.pushMatrix();
-
-            controller.translate((int) ((320 - flappyRadius) * controller.getFactor()), y - flappyRadius);
-            controller.rotate(PApplet.radians(Math.min(90, rotateAfterDeath)));
-            controller.copy(cbird, 0, 0, cbird.width, cbird.height, 0,
-                    0, flappyRadius * 2, flappyRadius * 2);
-
-            controller.popMatrix();
-        } else {
-            controller.copy(cbird, 0, 0, cbird.width, cbird.height,
-                    (int) ((320 - flappyRadius) * controller.getFactor()),
-                    y - flappyRadius, flappyRadius * 2, flappyRadius * 2);
+            rotateAfterDeath += 10;
         }
+
+        controller.pushMatrix();
+
+        controller.translate((int) ((320 - flappyRadius) * controller.getFactor()), y - flappyRadius);
+        controller.rotate(PApplet.radians(Math.min(90, rotateAfterDeath)));
+        controller.copy(cbird, 0, 0, cbird.width, cbird.height, 0,
+                0, flappyRadius * 2, flappyRadius * 2);
+
+        controller.popMatrix();
     }
 
     public int getFlappyRadius() {

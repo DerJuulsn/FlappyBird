@@ -1,6 +1,7 @@
 package de.bildner.FlappyBird.Game;
 
 import de.bildner.FlappyBird.Entities.Player;
+import processing.core.PConstants;
 
 import java.util.ArrayList;
 
@@ -48,9 +49,11 @@ class GameDrawer {
 
             player.draw();
 
-            controller.textSize(50);
-            controller.text(controller.getGAME_COIN_MANAGER().getScore(), 20, 70);
-            controller.text(controller.getGAME_COIN_MANAGER().getHighScore(), 20, 140);
+            controller.fill(255);
+            controller.textSize(30);
+            controller.textAlign(PConstants.UP);
+            controller.text("Score:         " + controller.getGAME_COIN_MANAGER().getScore(), 15, 45);
+            controller.text("High Score: " + controller.getGAME_COIN_MANAGER().getHighScore(), 15, 90);
 
         }
     }

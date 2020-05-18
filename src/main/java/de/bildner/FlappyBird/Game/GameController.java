@@ -118,6 +118,5 @@ public class GameController extends PApplet {
 
     public void setDead() {
         setState(GameState.DEAD);
-        player.flapp();
     }
 }

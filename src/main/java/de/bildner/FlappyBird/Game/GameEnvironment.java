@@ -117,7 +117,7 @@ class GameEnvironment {
         }
 
         public boolean gotPassed() {
-            if (!passed && x <= 320 - controller.getPlayer().getFlappyRadius()) {
+            if (!passed && x + tileWidth <= 320 - controller.getPlayer().getFlappyRadius()) {
                 passed = true;
                 return true;
             }
